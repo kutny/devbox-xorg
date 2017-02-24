@@ -50,6 +50,9 @@ RUN apt-get update \
 
 RUN mkdir /home/devbox/.PhpStorm2016.3 \
     && touch /home/devbox/.PhpStorm2016.3/.keep \
+	&& chown -R devbox:devbox /home/devbox/.PhpStorm2016.3/ \
+	&& mkdir /home/workspace \
+	&& chown -R devbox:devbox /home/workspace/ \
     && mkdir /opt/phpstorm \
     && wget -O - https://download.jetbrains.com/webide/PhpStorm-2016.3.2.tar.gz | tar xzf - --strip-components=1 -C "/opt/phpstorm"
 

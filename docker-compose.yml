@@ -1,0 +1,16 @@
+version: '2'
+services:
+    devbox-xorg:
+        container_name: devbox-xorg
+        build: ./
+        image: devbox-xorg
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - phpstorm-config:/home/devbox/.PhpStorm2016.3
+            - workspace:/home/devbox/workspace
+        ports:
+            - "2022:22"
+
+volumes:
+    phpstorm-config:
+    workspace:
