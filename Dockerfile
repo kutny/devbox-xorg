@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:16.10
 MAINTAINER Pawel Panasewicz
 
 RUN apt-get update -y \
@@ -16,7 +16,7 @@ RUN apt-get update -y \
 
 #xpra and it's dependencies
 RUN curl https://xpra.org/gpg.asc | apt-key add -
-RUN echo "deb https://xpra.org/ xenial main" > /etc/apt/sources.list.d/xpra.list
+RUN echo "deb https://xpra.org/ yakkety main" > /etc/apt/sources.list.d/xpra.list
 RUN apt-get update -y \
  && apt-get upgrade -y \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -51,13 +51,19 @@ RUN apt-get update \
 RUN mkdir /home/devbox/.PhpStorm2016.3 \
     && touch /home/devbox/.PhpStorm2016.3/.keep \
 	&& chown -R devbox:devbox /home/devbox/.PhpStorm2016.3/ \
-	&& mkdir /home/workspace \
-	&& chown -R devbox:devbox /home/workspace/ \
+	&& mkdir /home/devbox/workspace \
+	&& chown -R devbox:devbox /home/devbox/workspace/ \
     && mkdir /opt/phpstorm \
     && wget -O - https://download.jetbrains.com/webide/PhpStorm-2016.3.2.tar.gz | tar xzf - --strip-components=1 -C "/opt/phpstorm"
 
 RUN apt-get update && apt-get install firefox
-	
+
+RUN apt-get update \
+    && apt-get install -y avahi-daemon python3-setuptools python3-dev \
+    && easy_install3 pip \
+    && pip3 install netifaces \
+    && pip3 install xxhash
+
 #run ssh service
 RUN mkdir /var/run/sshd
 EXPOSE 22
